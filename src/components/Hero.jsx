@@ -1,9 +1,21 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { GraduationCap, Sparkles } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import Button from './ui/Button'
 import Eyebrow from './ui/Eyebrow'
 import CountUp from './ui/CountUp'
+import Typewriter from './ui/Typewriter'
+import Marquee from './ui/Marquee'
+
+const examBadges = [
+  'JEE',
+  'NEET',
+  'SSC',
+  'Railways',
+  'Banking',
+  'English Speaking',
+  'Personality Development',
+]
 
 export default function Hero() {
   const sectionRef = useRef(null)
@@ -13,24 +25,14 @@ export default function Hero() {
   })
   const imageY = useTransform(scrollYProgress, [0, 1], [0, 140])
   const collageY = useTransform(scrollYProgress, [0, 1], [0, 70])
-  const blobY = useTransform(scrollYProgress, [0, 1], [0, -100])
   const contentY = useTransform(scrollYProgress, [0, 1], [0, -40])
 
   return (
     <section
       ref={sectionRef}
       id="top"
-      className="noise-overlay relative overflow-hidden bg-navy-950 pt-32 pb-24 lg:pt-40 lg:pb-32"
+      className="relative overflow-hidden bg-cream-50 pt-32 pb-24 lg:pt-40 lg:pb-32"
     >
-      {/* decorative glows */}
-      <motion.div
-        style={{ y: blobY }}
-        className="pointer-events-none absolute -top-40 -right-40 h-[32rem] w-[32rem] rounded-full bg-amber-500/20 blur-[120px]"
-      />
-      <motion.div
-        style={{ y: blobY }}
-        className="pointer-events-none absolute top-1/2 -left-40 h-[26rem] w-[26rem] rounded-full bg-navy-600/40 blur-[100px]"
-      />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10 lg:px-10">
         <motion.div style={{ y: contentY }}>
@@ -46,13 +48,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-balance mt-6 font-display text-[2.6rem] leading-[1.1] font-bold text-cream-50 sm:text-5xl lg:text-[3.4rem]"
+            className="text-balance mt-6 font-display text-[2.6rem] leading-[1.1] font-bold text-navy-950 sm:text-5xl lg:text-[3.4rem]"
           >
             Your future should be shaped by your{' '}
-            <span className="relative text-amber-400">
+            <span className="relative text-amber-600">
               potential
               <svg
-                className="absolute -bottom-1 left-0 w-full text-amber-400/60"
+                className="absolute -bottom-1 left-0 w-full text-amber-500/60"
                 viewBox="0 0 200 12"
                 fill="none"
                 preserveAspectRatio="none"
@@ -72,7 +74,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 text-lg font-medium text-cream-100/90"
+            className="mt-6 text-lg font-medium text-navy-800"
           >
             Scholarships and affordable career-focused learning for students and aspiring
             professionals.
@@ -82,7 +84,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.28 }}
-            className="mt-4 max-w-xl text-[15.5px] leading-relaxed text-cream-100/60"
+            className="mt-4 max-w-xl text-[15.5px] leading-relaxed text-navy-500"
           >
             Whether you're preparing for JEE, NEET, SSC, Railways or Banking exams, or building
             the communication and professional skills needed for your next opportunity, Skillzza
@@ -94,9 +96,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.36 }}
-            className="mt-7 border-l-2 border-amber-400/60 pl-4"
+            className="mt-7 flex min-h-9 items-center border-l-2 border-amber-500/60 pl-4"
           >
-            <p className="font-hindi text-2xl text-amber-300">मेहनत आपकी, साथ हमारा।</p>
+            <Typewriter
+              text="मेहनत आपकी, साथ हमारा।"
+              className="font-hindi text-2xl text-amber-600"
+            />
           </motion.div>
 
           <motion.div
@@ -108,28 +113,9 @@ export default function Hero() {
             <Button as="a" href="#apply">
               Apply Now
             </Button>
-            <Button as="a" href="#programmes" variant="outline">
+            <Button as="a" href="#programmes" variant="outlineLight">
               Explore Courses
             </Button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.52 }}
-            className="mt-10 flex items-center gap-3 rounded-2xl border border-cream-50/10 bg-cream-50/5 px-5 py-4 backdrop-blur-sm"
-          >
-            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-amber-500/15">
-              <GraduationCap size={22} className="text-amber-400" />
-            </div>
-            <div>
-              <p className="text-[15px] font-bold text-cream-50">
-                Skillzza × Earth Care Foundation
-              </p>
-              <p className="text-[13px] text-cream-100/55">
-                A collaborative initiative for accessible and equitable education
-              </p>
-            </div>
           </motion.div>
         </motion.div>
 
@@ -165,13 +151,13 @@ export default function Hero() {
           </motion.div>
 
           <motion.div style={{ y: imageY }}>
-            <div className="relative overflow-hidden rounded-[1.75rem] shadow-2xl shadow-navy-950/60">
+            <div className="relative overflow-hidden rounded-[1.75rem] shadow-2xl shadow-navy-900/20">
               <img
                 src="/hero_biggerImg.png"
                 alt="A group of students studying together in the library"
                 className="h-[420px] w-full object-cover sm:h-[520px]"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-navy-950/70 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-navy-950/50 via-transparent to-transparent" />
             </div>
           </motion.div>
 
@@ -191,7 +177,7 @@ export default function Hero() {
               y: { duration: 0.7, delay: 0.7 },
               boxShadow: { duration: 2.6, repeat: Infinity, ease: 'easeInOut', delay: 1.4 },
             }}
-            className="absolute -bottom-8 -left-6 z-10 flex items-center gap-3 rounded-2xl bg-cream-50 px-5 py-4 sm:-left-10"
+            className="absolute -bottom-8 -left-6 z-10 flex items-center gap-3 rounded-2xl border border-navy-100 bg-white px-5 py-4 sm:-left-10"
           >
             {/* <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-amber-400">
               <Sparkles size={20} className="text-navy-950" />
@@ -205,6 +191,18 @@ export default function Hero() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.7, delay: 0.9 }}
+        className="relative mt-16 border-t border-navy-100 pt-8 lg:mt-24"
+      >
+        <p className="mx-auto mb-4 max-w-7xl px-6 text-center text-[11px] font-bold tracking-widest text-navy-400 uppercase lg:px-10">
+          Preparing students for
+        </p>
+        <Marquee items={examBadges} />
+      </motion.div> */}
     </section>
   )
 }

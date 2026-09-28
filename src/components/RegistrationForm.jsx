@@ -13,10 +13,6 @@ import {
   BookOpen,
   MapPin,
   ShieldCheck,
-  Clock3,
-  Sparkles,
-  PenLine,
-  Star,
 } from 'lucide-react'
 import Input from './ui/Input'
 import CustomSelect from './ui/CustomSelect'
@@ -24,7 +20,6 @@ import RadioCards from './ui/RadioCards'
 import SegmentedControl from './ui/SegmentedControl'
 import Checkbox from './ui/Checkbox'
 import Stepper from './ui/Stepper'
-import Eyebrow from './ui/Eyebrow'
 import SuccessModal from './SuccessModal'
 import { classOptions, mediumOptions, programmeGroups, locationOptions } from '../data/formOptions'
 
@@ -48,19 +43,6 @@ const initialData = {
   location: '',
   consentInfo: false,
   consentContact: false,
-}
-
-function FloatingDoodle({ icon: Icon, className, delay = 0, duration = 4 }) {
-  return (
-    <motion.div
-      aria-hidden="true"
-      animate={{ y: [0, -14, 0], rotate: [0, 4, 0] }}
-      transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
-      className={`pointer-events-none absolute hidden h-12 w-12 items-center justify-center rounded-2xl border border-navy-100 bg-white shadow-md shadow-navy-900/5 lg:flex ${className}`}
-    >
-      <Icon size={20} className="text-amber-500" />
-    </motion.div>
-  )
 }
 
 export default function RegistrationForm() {
@@ -136,48 +118,38 @@ export default function RegistrationForm() {
       {/* decorative background */}
       <div className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-amber-200/40 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-navy-100/70 blur-3xl" />
-      <FloatingDoodle icon={PenLine} className="top-16 left-[6%]" delay={0} />
-      <FloatingDoodle icon={Star} className="top-1/2 left-[2%]" delay={0.8} duration={5} />
-      <FloatingDoodle icon={Sparkles} className="bottom-20 left-[14%]" delay={1.4} />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-balance mx-auto max-w-3xl text-center font-display text-4xl font-bold text-navy-950 sm:text-[2.6rem]"
+        >
+          Apply for Scholarship & Career Programme 2026
+        </motion.h2>
+
+        <div className="mt-14 grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div className="lg:sticky lg:top-28">
-            <Eyebrow>Apply for Scholarship & Career Programme 2026</Eyebrow>
-            <h2 className="text-balance mt-5 font-display text-4xl font-bold text-navy-950 sm:text-[2.6rem]">
-              Take the first step towards your academic and career goals.
-            </h2>
-            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-navy-500">
-              Fill in your details below — it takes less than two minutes. Our team will verify
-              your eligibility and reach out on WhatsApp.
-            </p>
+            <div className="relative h-[480px] overflow-hidden rounded-3xl shadow-2xl shadow-navy-900/20 sm:h-[560px] lg:h-[720px]">
+              <img
+                src="/girllibraryimg.png"
+                alt="Student in a library, taking the first step towards her goals"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,transparent_38%,rgba(4,6,13,0.55)_58%,rgba(4,6,13,0.94)_100%)]" />
 
-            <div className="relative mt-9 hidden lg:block">
-              <div className="absolute -inset-3 -z-10 rounded-[2rem] bg-linear-to-br from-amber-300/40 to-transparent blur-xl" />
-              <div className="overflow-hidden rounded-[1.5rem] border-4 border-white shadow-xl shadow-navy-900/10">
-                <img
-                  src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=700&q=80"
-                  alt="Student walking through a library, taking the first step towards their goals"
-                  className="h-64 w-full object-cover"
-                  loading="lazy"
-                />
+              <div className="relative z-10 flex h-full flex-col justify-end p-7 sm:p-9">
+                <h2 className="text-balance font-display text-3xl font-bold text-cream-50 sm:text-[2.4rem]">
+                  Take the first step towards your academic and career goals.
+                </h2>
+                <p className="mt-4 max-w-md text-[15px] leading-relaxed text-cream-100/75">
+                  Fill in your details below — it takes less than two minutes. Our team will
+                  verify your eligibility and reach out on WhatsApp.
+                </p>
               </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 14, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="absolute -top-5 -right-5 flex items-center gap-2 rounded-2xl border border-navy-100 bg-white px-4 py-3 shadow-lg shadow-navy-900/10"
-              >
-                <div className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-amber-100">
-                  <Clock3 size={16} className="text-amber-600" />
-                </div>
-                <div>
-                  <p className="text-[13px] font-bold text-navy-950">Under 2 minutes</p>
-                  <p className="text-[11px] text-navy-400">Quick & easy</p>
-                </div>
-              </motion.div>
             </div>
           </div>
 

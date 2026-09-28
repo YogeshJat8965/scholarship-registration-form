@@ -90,7 +90,7 @@ export default function Scholarship() {
               </span>{' '}
               off for eligible scholars
             </h2>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cream-100/70">
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cream-100/90">
               Through the Skillzza × Earth Care Foundation initiative, eligible students can
               access selected programmes at up to 85% discounted fees.
             </p>
@@ -101,7 +101,7 @@ export default function Scholarship() {
               </Button>
             </div>
 
-            <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-cream-100/50">
+            <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-cream-100/75">
               Seats are limited. Scholarships are awarded on eligibility and verification, in
               order of registration.
             </p>
@@ -110,7 +110,7 @@ export default function Scholarship() {
           <div className="grid gap-6 sm:grid-cols-2">
             <Reveal
               delay={0.1}
-              className="rounded-2xl border border-cream-50/15 bg-navy-950/50 p-6 shadow-xl shadow-navy-950/30 backdrop-blur-md"
+              className="rounded-2xl border border-cream-50/15 bg-navy-950/80 p-6 shadow-xl shadow-navy-950/30 backdrop-blur-md"
             >
               <h3 className="font-display text-lg font-bold text-cream-50">Who can apply</h3>
               <ul className="mt-5 flex flex-col gap-5">
@@ -121,7 +121,7 @@ export default function Scholarship() {
                     </div>
                     <div>
                       <p className="text-[14.5px] font-semibold text-cream-50">{title}</p>
-                      <p className="mt-0.5 text-[13px] text-cream-100/55">{note}</p>
+                      <p className="mt-0.5 text-[13px] text-cream-100/85">{note}</p>
                     </div>
                   </li>
                 ))}
@@ -130,7 +130,7 @@ export default function Scholarship() {
 
             <Reveal
               delay={0.18}
-              className="rounded-2xl border border-amber-400/25 bg-amber-500/10 p-6 shadow-xl shadow-navy-950/30 backdrop-blur-md"
+              className="rounded-2xl border border-amber-400/25 bg-linear-to-br from-amber-500/20 to-navy-950/80 p-6 shadow-xl shadow-navy-950/30 backdrop-blur-md"
             >
               <h3 className="font-display text-lg font-bold text-cream-50">What you get</h3>
               <ul className="mt-5 flex flex-col gap-5">
@@ -141,7 +141,7 @@ export default function Scholarship() {
                     </div>
                     <div>
                       <p className="text-[14.5px] font-semibold text-cream-50">{title}</p>
-                      <p className="mt-0.5 text-[13px] text-cream-100/55">{note}</p>
+                      <p className="mt-0.5 text-[13px] text-cream-100/85">{note}</p>
                     </div>
                   </li>
                 ))}

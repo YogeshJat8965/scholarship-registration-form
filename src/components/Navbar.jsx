@@ -25,21 +25,14 @@ export default function Navbar() {
   return (
     <header
       className={clsx(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled
-          ? 'bg-cream-50/90 shadow-sm shadow-navy-900/5 backdrop-blur-lg'
-          : 'bg-transparent',
+        'fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-300',
+        scrolled && 'shadow-sm shadow-navy-900/5',
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
         <a href="#top" className="flex items-center gap-3">
-          <img src="/SKillzza-Logo-123-01.png" alt="Skillzza" className="h-9 w-auto" />
-          <span
-            className={clsx(
-              'hidden text-[11px] font-semibold tracking-widest uppercase sm:block',
-              scrolled ? 'text-amber-600' : 'text-amber-300',
-            )}
-          >
+          <img src="/SKillzza-Logo-123-01.png" alt="Skillzza" className="h-11 w-auto" />
+          <span className="hidden text-[11px] font-semibold tracking-widest text-amber-600 uppercase sm:block">
             × Earth Care Foundation
           </span>
         </a>
@@ -49,12 +42,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className={clsx(
-                'text-[15px] font-medium transition-colors',
-                scrolled
-                  ? 'text-navy-700 hover:text-amber-600'
-                  : 'text-cream-50/85 hover:text-amber-300',
-              )}
+              className="text-[15px] font-medium text-navy-700 transition-colors hover:text-amber-600"
             >
               {link.label}
             </a>
@@ -67,10 +55,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setMenuOpen((o) => !o)}
-          className={clsx(
-            'grid h-10 w-10 place-items-center rounded-full md:hidden',
-            scrolled ? 'text-navy-900' : 'text-cream-50',
-          )}
+          className="grid h-10 w-10 place-items-center rounded-full text-navy-900 md:hidden"
           aria-label="Toggle menu"
         >
           {menuOpen ? <X size={22} /> : <Menu size={22} />}

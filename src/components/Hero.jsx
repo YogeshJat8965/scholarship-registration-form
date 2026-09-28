@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import Button from './ui/Button'
@@ -23,9 +23,19 @@ export default function Hero() {
     target: sectionRef,
     offset: ['start start', 'end start'],
   })
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, 140])
-  const collageY = useTransform(scrollYProgress, [0, 1], [0, 70])
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -40])
+
+  const [isDesktop, setIsDesktop] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    setIsDesktop(mq.matches)
+    const handler = (e) => setIsDesktop(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  const imageY = useTransform(scrollYProgress, [0, 1], isDesktop ? [0, 140] : [0, 0])
+  const collageY = useTransform(scrollYProgress, [0, 1], isDesktop ? [0, 70] : [0, 0])
+  const contentY = useTransform(scrollYProgress, [0, 1], isDesktop ? [0, -40] : [0, 0])
 
   return (
     <section
@@ -155,7 +165,7 @@ export default function Hero() {
               <img
                 src="/hero_biggerImg.png"
                 alt="A group of students studying together in the library"
-                className="h-[420px] w-full object-cover sm:h-[520px]"
+                className="aspect-video w-full object-cover sm:aspect-auto sm:h-[420px] lg:h-[520px]"
               />
               <div className="absolute inset-0 bg-linear-to-t from-navy-950/50 via-transparent to-transparent" />
             </div>

@@ -41,6 +41,7 @@ const initialData = {
   programme: '',
   medium: '',
   location: '',
+  locationOther: '',
   consentInfo: false,
   consentContact: false,
 }
@@ -77,6 +78,8 @@ export default function RegistrationForm() {
     }
     if (current === 3) {
       if (!data.location) next.location = 'Select your location'
+      if (data.location === 'Other' && !data.locationOther.trim())
+        next.locationOther = 'Please type your location'
     }
     if (current === 4) {
       if (!data.consentInfo) next.consentInfo = 'Please confirm the information is correct'
@@ -285,6 +288,27 @@ export default function RegistrationForm() {
                       onChange={(v) => update('location', v)}
                       error={errors.location}
                     />
+                    <AnimatePresence>
+                      {data.location === 'Other' && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="overflow-hidden"
+                        >
+                          <Input
+                            icon={MapPin}
+                            label="Type your location"
+                            required
+                            placeholder="Enter your city / town, state"
+                            value={data.locationOther}
+                            onChange={(e) => update('locationOther', e.target.value)}
+                            error={errors.locationOther}
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 )}
 
@@ -318,7 +342,8 @@ export default function RegistrationForm() {
                       <p className="text-[13px] leading-relaxed text-navy-600">
                         <span className="font-bold text-amber-700">Please review: </span>
                         {data.fullName || '—'} · {data.currentClass || '—'} ·{' '}
-                        {data.programme || '—'} · {data.location || '—'}
+                        {data.programme || '—'} ·{' '}
+                        {(data.location === 'Other' ? data.locationOther : data.location) || '—'}
                       </p>
                     </div>
                   </div>

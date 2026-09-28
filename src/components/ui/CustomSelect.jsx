@@ -73,6 +73,10 @@ export default function CustomSelect({
     setQuery('')
   }
 
+  const hasOtherOption = grouped
+    ? options.some((group) => group.options.includes('Other'))
+    : options.includes('Other')
+
   return (
     <div className="flex flex-col gap-2" ref={rootRef}>
       {label && (
@@ -157,13 +161,22 @@ export default function CustomSelect({
                         onSelect={handleSelect}
                       />
                     ))}
-                {grouped
-                  ? filteredOptions.length === 0 && (
-                      <p className="px-4 py-3 text-sm text-navy-400">No matches found</p>
-                    )
-                  : filteredOptions.length === 0 && (
-                      <p className="px-4 py-3 text-sm text-navy-400">No matches found</p>
+                {filteredOptions.length === 0 && (
+                  <div className="px-4 py-3">
+                    <p className="text-sm text-navy-400">
+                      No matches found{query ? ` for "${query}"` : ''}
+                    </p>
+                    {hasOtherOption && query && (
+                      <button
+                        type="button"
+                        onClick={() => handleSelect('Other')}
+                        className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 transition-colors hover:text-amber-700"
+                      >
+                        Can't find it? Select "Other"
+                      </button>
                     )}
+                  </div>
+                )}
               </div>
             </motion.div>
           )}

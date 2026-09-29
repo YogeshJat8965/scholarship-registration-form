@@ -7,7 +7,6 @@ import Button from './ui/Button'
 const links = [
   { label: 'Programmes', href: '#programmes' },
   { label: 'Scholarship', href: '#scholarship' },
-  { label: 'Apply', href: '#apply' },
 ]
 
 export default function Navbar() {
@@ -32,9 +31,9 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
         <a href="#top" className="flex items-center gap-3">
           <img src="/SKillzza-Logo-123-01.png" alt="Skillzza" className="h-11 w-auto" />
-          <span className="hidden text-[11px] font-semibold tracking-widest text-amber-600 uppercase sm:block">
-            × Earth Care Foundation
-          </span>
+          {/* <span className="hidden text-[11px] font-semibold tracking-widest text-amber-600 uppercase sm:block">
+            ×  
+          </span> */}
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

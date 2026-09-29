@@ -16,6 +16,7 @@ export default function CustomSelect({
   error,
   searchable = false,
   required = false,
+  allowCustom = false,
 }) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -72,10 +73,6 @@ export default function CustomSelect({
     setOpen(false)
     setQuery('')
   }
-
-  const hasOtherOption = grouped
-    ? options.some((group) => group.options.includes('Other'))
-    : options.includes('Other')
 
   return (
     <div className="flex flex-col gap-2" ref={rootRef}>
@@ -166,13 +163,13 @@ export default function CustomSelect({
                     <p className="text-sm text-navy-400">
                       No matches found{query ? ` for "${query}"` : ''}
                     </p>
-                    {hasOtherOption && query && (
+                    {allowCustom && query.trim() && (
                       <button
                         type="button"
-                        onClick={() => handleSelect('Other')}
+                        onClick={() => handleSelect(query.trim())}
                         className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 transition-colors hover:text-amber-700"
                       >
-                        Can't find it? Select "Other"
+                        Use "{query.trim()}"
                       </button>
                     )}
                   </div>

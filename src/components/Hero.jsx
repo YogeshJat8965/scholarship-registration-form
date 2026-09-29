@@ -80,7 +80,7 @@ export default function Hero() {
             , not your circumstances.
           </motion.h1>
 
-          <motion.p
+          {/* <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -88,18 +88,18 @@ export default function Hero() {
           >
             Scholarships and affordable career-focused learning for students and aspiring
             professionals.
-          </motion.p>
+          </motion.p> */}
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.28 }}
-            className="mt-4 max-w-xl text-[15.5px] leading-relaxed text-navy-500"
+            className="mt-4 max-w-xl text-[17.5px] leading-relaxed text-navy-500"
           >
-            Whether you're preparing for JEE, NEET, SSC, Railways or Banking exams, or building
-            the communication and professional skills needed for your next opportunity, Skillzza
+            Are you preparing for JEE, NEET, SSC, Railways or Banking exams, or building
+            the communication and professional skills needed for your next opportunity? <br /> <br /> Skillzza
             brings structured learning, expert guidance and technology-powered preparation within
-            reach.
+            reach in collaboration with Earth Care Foundation.
           </motion.p>
 
           <motion.div

@@ -1,47 +1,26 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import {
-  ArrowLeft,
-  ArrowRight,
-  Loader2,
-  User,
-  Users,
-  Phone,
-  Mail,
-  GraduationCap,
-  Building2,
-  BookOpen,
-  MapPin,
-  ShieldCheck,
-} from 'lucide-react'
+import emailjs from '@emailjs/browser'
+import { ArrowLeft, ArrowRight, Loader2, User, Phone, ShieldCheck, AlertCircle } from 'lucide-react'
 import Input from './ui/Input'
 import CustomSelect from './ui/CustomSelect'
 import RadioCards from './ui/RadioCards'
-import SegmentedControl from './ui/SegmentedControl'
 import Checkbox from './ui/Checkbox'
 import Stepper from './ui/Stepper'
 import SuccessModal from './SuccessModal'
-import { classOptions, mediumOptions, programmeGroups, locationOptions } from '../data/formOptions'
+import { classOptions, programmeGroups, locationOptions } from '../data/formOptions'
 
 const steps = [
-  { label: 'Personal', icon: User },
-  { label: 'Academic', icon: GraduationCap },
-  { label: 'Programme', icon: BookOpen },
-  { label: 'Location', icon: MapPin },
+  { label: 'Your Details', icon: User },
   { label: 'Consent', icon: ShieldCheck },
 ]
 
 const initialData = {
   fullName: '',
-  guardianName: '',
   mobile: '',
-  email: '',
   currentClass: '',
-  institution: '',
   programme: '',
-  medium: '',
   location: '',
-  locationOther: '',
   consentInfo: false,
   consentContact: false,
 }
@@ -51,6 +30,7 @@ export default function RegistrationForm() {
   const [data, setData] = useState(initialData)
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [showSuccess, setShowSuccess] = useState(false)
 
   function update(field, value) {
@@ -62,26 +42,13 @@ export default function RegistrationForm() {
     const next = {}
     if (current === 0) {
       if (!data.fullName.trim()) next.fullName = "Student's full name is required"
-      if (!data.guardianName.trim()) next.guardianName = "Parent / guardian's name is required"
       if (!/^[6-9]\d{9}$/.test(data.mobile.trim()))
         next.mobile = 'Enter a valid 10-digit mobile number'
-      if (data.email.trim() && !/^\S+@\S+\.\S+$/.test(data.email.trim()))
-        next.email = 'Enter a valid email address'
+      if (!data.currentClass) next.currentClass = 'Select your current class / qualification'
+      if (!data.programme) next.programme = 'Select what you are preparing for'
+      if (!data.location) next.location = 'Select or type your location'
     }
     if (current === 1) {
-      if (!data.currentClass) next.currentClass = 'Select your current class / qualification'
-      if (!data.institution.trim()) next.institution = 'Institution name is required'
-    }
-    if (current === 2) {
-      if (!data.programme) next.programme = 'Select what you are preparing for'
-      if (!data.medium) next.medium = 'Select your preferred medium'
-    }
-    if (current === 3) {
-      if (!data.location) next.location = 'Select your location'
-      if (data.location === 'Other' && !data.locationOther.trim())
-        next.locationOther = 'Please type your location'
-    }
-    if (current === 4) {
       if (!data.consentInfo) next.consentInfo = 'Please confirm the information is correct'
       if (!data.consentContact) next.consentContact = 'Please provide consent to be contacted'
     }
@@ -100,13 +67,32 @@ export default function RegistrationForm() {
   }
 
   function handleSubmit() {
-    if (!validateStep(4)) return
+    if (!validateStep(1)) return
     setSubmitting(true)
-    // Frontend-only for now — will be wired to EmailJS to deliver submissions.
-    setTimeout(() => {
-      setSubmitting(false)
-      setShowSuccess(true)
-    }, 1100)
+    setSubmitError('')
+
+    emailjs
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          full_name: data.fullName,
+          mobile: data.mobile,
+          current_class: data.currentClass,
+          programme: data.programme,
+          location: data.location,
+        },
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
+      )
+      .then(() => {
+        setSubmitting(false)
+        setShowSuccess(true)
+      })
+      .catch((err) => {
+        console.error('EmailJS send failed:', err)
+        setSubmitting(false)
+        setSubmitError('Something went wrong while submitting. Please try again.')
+      })
   }
 
   function handleCloseSuccess() {
@@ -130,7 +116,7 @@ export default function RegistrationForm() {
           transition={{ duration: 0.6 }}
           className="text-balance mx-auto max-w-3xl text-center font-display text-4xl font-bold text-navy-950 sm:text-[2.6rem]"
         >
-          Apply for Scholarship & Career Programme 2026
+          Apply for Scholarship
         </motion.h2>
 
         <div className="mt-14 grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
@@ -149,7 +135,7 @@ export default function RegistrationForm() {
                   Take the first step towards your academic and career goals.
                 </h2>
                 <p className="mt-4 max-w-md text-[15px] leading-relaxed text-cream-100/75">
-                  Fill in your details below — it takes less than two minutes. Our team will
+                  Fill in your details below - it takes less than two minutes. Our team will
                   verify your eligibility and reach out on WhatsApp.
                 </p>
               </div>
@@ -161,9 +147,11 @@ export default function RegistrationForm() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-3xl border border-navy-100 bg-white p-6 shadow-2xl shadow-amber-900/10 sm:p-9"
+            className="relative rounded-3xl border border-navy-100 bg-white p-6 shadow-2xl shadow-amber-900/10 sm:p-9"
           >
-            <div className="absolute inset-x-0 top-0 h-1.5 bg-linear-to-r from-amber-400 via-amber-500 to-navy-700" />
+            <div className="absolute inset-x-0 top-0 h-8 overflow-hidden rounded-t-3xl">
+              <div className="h-1.5 bg-linear-to-r from-amber-400 via-amber-500 to-navy-700" />
+            </div>
 
             <Stepper steps={steps} current={step} />
 
@@ -178,7 +166,7 @@ export default function RegistrationForm() {
                 {step === 0 && (
                   <div className="flex flex-col gap-5">
                     <h3 className="font-display text-xl font-bold text-navy-950">
-                      Personal Details
+                      Your Details
                     </h3>
                     <Input
                       icon={User}
@@ -188,15 +176,6 @@ export default function RegistrationForm() {
                       value={data.fullName}
                       onChange={(e) => update('fullName', e.target.value)}
                       error={errors.fullName}
-                    />
-                    <Input
-                      icon={Users}
-                      label="Parent / guardian's name"
-                      required
-                      placeholder="Enter parent / guardian name"
-                      value={data.guardianName}
-                      onChange={(e) => update('guardianName', e.target.value)}
-                      error={errors.guardianName}
                     />
                     <Input
                       icon={Phone}
@@ -210,23 +189,6 @@ export default function RegistrationForm() {
                       onChange={(e) => update('mobile', e.target.value.replace(/\D/g, ''))}
                       error={errors.mobile}
                     />
-                    <Input
-                      icon={Mail}
-                      label="Email address"
-                      type="email"
-                      placeholder="Enter email address"
-                      value={data.email}
-                      onChange={(e) => update('email', e.target.value)}
-                      error={errors.email}
-                    />
-                  </div>
-                )}
-
-                {step === 1 && (
-                  <div className="flex flex-col gap-5">
-                    <h3 className="font-display text-xl font-bold text-navy-950">
-                      Academic Details
-                    </h3>
                     <RadioCards
                       label="Current class / qualification"
                       required
@@ -235,23 +197,6 @@ export default function RegistrationForm() {
                       onChange={(v) => update('currentClass', v)}
                       error={errors.currentClass}
                     />
-                    <Input
-                      icon={Building2}
-                      label="School / junior college / institution name"
-                      required
-                      placeholder="Enter institution name"
-                      value={data.institution}
-                      onChange={(e) => update('institution', e.target.value)}
-                      error={errors.institution}
-                    />
-                  </div>
-                )}
-
-                {step === 2 && (
-                  <div className="flex flex-col gap-5">
-                    <h3 className="font-display text-xl font-bold text-navy-950">
-                      Choose Your Programme
-                    </h3>
                     <CustomSelect
                       label="What are you preparing for?"
                       required
@@ -262,57 +207,21 @@ export default function RegistrationForm() {
                       onChange={(v) => update('programme', v)}
                       error={errors.programme}
                     />
-                    <SegmentedControl
-                      label="Preferred medium"
-                      required
-                      options={mediumOptions}
-                      value={data.medium}
-                      onChange={(v) => update('medium', v)}
-                    />
-                    {errors.medium && <p className="text-sm text-red-500">{errors.medium}</p>}
-                  </div>
-                )}
-
-                {step === 3 && (
-                  <div className="flex flex-col gap-5">
-                    <h3 className="font-display text-xl font-bold text-navy-950">
-                      Location Details
-                    </h3>
                     <CustomSelect
                       label="Your location"
                       required
                       searchable
-                      placeholder="Select location"
+                      allowCustom
+                      placeholder="Select or type your location"
                       options={locationOptions}
                       value={data.location}
                       onChange={(v) => update('location', v)}
                       error={errors.location}
                     />
-                    <AnimatePresence>
-                      {data.location === 'Other' && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.25 }}
-                          className="overflow-hidden"
-                        >
-                          <Input
-                            icon={MapPin}
-                            label="Type your location"
-                            required
-                            placeholder="Enter your city / town, state"
-                            value={data.locationOther}
-                            onChange={(e) => update('locationOther', e.target.value)}
-                            error={errors.locationOther}
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
                 )}
 
-                {step === 4 && (
+                {step === 1 && (
                   <div className="flex flex-col gap-5">
                     <h3 className="font-display text-xl font-bold text-navy-950">
                       Consent & Declaration
@@ -331,9 +240,8 @@ export default function RegistrationForm() {
                           onChange={(v) => update('consentContact', v)}
                           error={errors.consentContact}
                         >
-                          I agree that Skillzza and Earth Care Foundation may contact me by call,
-                          SMS or WhatsApp regarding this scholarship, programme eligibility and
-                          related opportunities.
+                          I agree that Skillzza may contact me by call, SMS or WhatsApp regarding
+                          this scholarship, programme eligibility and related opportunities.
                         </Checkbox>
                       </div>
                     </div>
@@ -341,15 +249,21 @@ export default function RegistrationForm() {
                     <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
                       <p className="text-[13px] leading-relaxed text-navy-600">
                         <span className="font-bold text-amber-700">Please review: </span>
-                        {data.fullName || '—'} · {data.currentClass || '—'} ·{' '}
-                        {data.programme || '—'} ·{' '}
-                        {(data.location === 'Other' ? data.locationOther : data.location) || '—'}
+                        {data.fullName || '-'} · {data.currentClass || '-'} ·{' '}
+                        {data.programme || '-'} · {data.location || '-'}
                       </p>
                     </div>
                   </div>
                 )}
               </motion.div>
             </AnimatePresence>
+
+            {submitError && (
+              <div className="mt-6 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                <AlertCircle size={16} className="shrink-0" />
+                {submitError}
+              </div>
+            )}
 
             <div className="mt-8 flex items-center justify-between gap-4 border-t border-navy-100 pt-6">
               <button

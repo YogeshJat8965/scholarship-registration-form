@@ -5,7 +5,7 @@ export default function Footer() {
         <img src="/SKillzza-Logo-123-01.png" alt="Skillzza" className="h-10 w-auto" />
         <p className="font-hindi text-sm text-amber-300">मेहनत आपकी, साथ हमारा।</p>
         <p className="text-[12.5px] text-cream-100/40">
-          © 2026 Skillzza × Earth Care Foundation. Scholarship & Career Preparation Programme.
+          © 2026 Skillzza ×  . Scholarship & Career Preparation Programme.
         </p>
       </div>
     </footer>

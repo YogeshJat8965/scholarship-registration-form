@@ -43,5 +43,4 @@ export const locationOptions = [
   'Faridabad, Haryana',
   'Peenya, Bengaluru Urban, Karnataka',
   'Nelamangala, Bengaluru Rural, Karnataka',
-  'Other',
 ]

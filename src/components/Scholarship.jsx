@@ -15,12 +15,12 @@ const whoCanApply = [
   {
     icon: Users,
     title: 'From economically weaker or underprivileged families',
-    note: 'Income documents are verified after shortlisting',
+    // note: 'Income documents are verified after shortlisting',
   },
   {
     icon: BookOpenCheck,
     title: 'Preparing for JEE or NEET',
-    note: 'In English or Hindi medium',
+    note: 'In English or Hindi',
   },
 ]
 
@@ -82,7 +82,7 @@ export default function Scholarship() {
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <Reveal>
-            <Eyebrow dark>Skillzza × Earth Care Foundation</Eyebrow>
+            {/* <Eyebrow dark>Skillzza ×  </Eyebrow> */}
             <h2 className="text-balance mt-5 font-display text-4xl font-bold text-cream-50 sm:text-[2.6rem]">
               Up to{' '}
               <span className="text-amber-400">
@@ -91,7 +91,7 @@ export default function Scholarship() {
               off for eligible scholars
             </h2>
             <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cream-100/90">
-              Through the Skillzza × Earth Care Foundation initiative, eligible students can
+              Through this initiative, eligible students can
               access selected programmes at up to 85% discounted fees.
             </p>
 

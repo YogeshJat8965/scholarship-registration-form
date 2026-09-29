@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ArrowUpRight, Check, RotateCw } from 'lucide-react'
 import { programmes } from '../data/programmes'
-import Eyebrow from './ui/Eyebrow'
 import Reveal from './ui/Reveal'
 
 export default function Programmes() {
@@ -9,17 +8,17 @@ export default function Programmes() {
     <section id="programmes" className="bg-cream-50 py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <Eyebrow>Learn. Prepare. Progress.</Eyebrow>
+          <p className="text-[13px] font-semibold tracking-wide text-amber-700 uppercase">
+            Learn. Prepare. Progress.
+          </p>
           <h2 className="text-balance mt-5 font-display text-4xl font-bold text-navy-950 sm:text-[2.75rem]">
             Our Programmes covered
           </h2>
           <p className="mt-4 text-[15.5px] text-navy-500">
             Choose the exam you are preparing for. Classes are available in English and Hindi
-            medium.
+            .
           </p>
-          <p className="mt-2 text-[13px] font-medium text-amber-600">
-            Hover or tap a card to see full programme details
-          </p>
+          
         </Reveal>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
